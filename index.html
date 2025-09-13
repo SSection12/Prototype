@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Al Hijrah Mobilndo — Jual Beli Mobil Bekas Syariah</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    /* Font dan sentuhan mewah */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap');
+
+    :root{
+      --gold:#d4af37;
+      --gold-soft:#c9a43a;
+      --gold-dim:#a88a2e;
+      --coal:#0b0b0d;
+      --coal-2:#121216;
+      --ink:#0f1115;
+    }
+
+    body{
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(212,175,55,0.12), transparent 60%),
+                  radial-gradient(900px 600px at -10% 50%, rgba(212,175,55,0.10), transparent 60%),
+                  linear-gradient(180deg, #0b0b0d 0%, #0e0e12 100%);
+      color:#e8e8ea;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      /* Sembunyikan scrollbar namun tetap bisa scroll */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE 10+ */
+    }
+    body::-webkit-scrollbar{ display: none; }
+    /* Sembunyikan scrollbar pada overlay namun gulir tetap aktif */
+    .hide-scrollbar{ scrollbar-width: none; -ms-overflow-style: none; }
+    .hide-scrollbar::-webkit-scrollbar{ display: none; }
+
+    /* Kilau emas lembut */
+    .gold-text{ color: var(--gold); }
+    .gold-gradient{
+      background: linear-gradient(135deg, #d4af37 0%, #f1d17a 40%, #b8922a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .gold-ring{
+      box-shadow: 0 0 0 1px rgba(212,175,55,0.25), inset 0 0 0 1px rgba(212,175,55,0.18);
+    }
+    .gold-border{
+      border: 1px solid rgba(212,175,55,0.18);
+    }
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      backdrop-filter: blur(8px);
+    }
+    .card-hover{
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s cubic-bezier(.2,.8,.2,1), border-color .4s ease;
+    }
+    .card-hover:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 18px 50px rgba(212,175,55,0.12), 0 2px 0 rgba(212,175,55,0.35) inset;
+      border-color: rgba(212,175,55,0.35);
+    }
+
+    /* Tombol mewah */
+    .btn{
+      transition: all .35s cubic-bezier(.2,.8,.2,1);
+    }
+    .btn-gold{
+      background: linear-gradient(135deg, #d4af37, #b8922a);
+      color:#0b0b0d;
+      box-shadow: 0 10px 30px rgba(212,175,55,0.25);
+    }
+    .btn-gold:hover{
+      filter: brightness(1.05) saturate(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(212,175,55,0.35);
+    }
+    .btn-outline-gold{
+      color:#e8e8ea;
+      border:1px solid rgba(212,175,55,0.35);
+      background: linear-gradient(180deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02));
+    }
+    .btn-outline-gold:hover{
+      border-color: rgba(241,209,122,0.65);
+      box-shadow: 0 12px 28px rgba(212,175,55,0.20);
+      transform: translateY(-2px);
+    }
+
+    /* Overlay & modal */
+    .overlay{
+      background: radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,0.4), rgba(0,0,0,0.72)),
+                  rgba(0,0,0,0.55);
+      animation: overlayFade .4s ease forwards;
+    }
+    @keyframes overlayFade{
+      from{ opacity: 0; } to{ opacity: 1; }
+    }
+    .scale-in{
+      animation: scaleIn .35s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    @keyframes scaleIn{
+      from{ opacity: 0; transform: translateY(18px) scale(.98); }
+      to{ opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Fullscreen detail swipe indicator */
+    .grab{
+      cursor: grab;
+    }
+
+    /* Heading font */
+    .display{
+      font-family: "Playfair Display", serif;
+      letter-spacing:.2px;
+    }
+
+    /* Prevent image drag ghosting for SVGs */
+    svg{ user-select: none; }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-yellow-600/20 selection:text-yellow-200">
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-40">
+    <div class="backdrop-blur-md bg-black/40 border-b border-yellow-300/10">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <!-- Simple golden emblem -->
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-700 shadow-[0_0_0_2px_rgba(212,175,55,0.35)] grid place-items-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3l2.5 5.2L20 9l-4 3.9L17 19l-5-2.6L7 19l1-6.1L4 9l5.5-.8L12 3z" stroke="#f1d17a" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="display text-2xl gold-gradient">Al Hijrah Mobilndo</div>
+            <p class="text-xs text-yellow-100/60">Jual Beli Mobil Bekas Syariah</p>
+          </div>
+        </div>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="#" class="text-yellow-100/70 hover:text-yellow-200 transition">Beranda</a>
+          <a href="#tentang" class="text-yellow-100/70 hover:text-yellow-200 transition">Tentang</a>
+          <button id="openMarketplaceTop" class="btn btn-outline-gold rounded-full px-4 py-2 text-sm">Browse Cars</button>
+        </nav>
+        <button id="openMarketplaceTopMobile" class="md:hidden btn btn-gold rounded-full px-4 py-2 text-sm">Browse</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative">
+    <div class="max-w-7xl mx-auto px-6 pt-16 pb-24 md:pt-24 md:pb-32">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h1 class="display text-4xl md:text-6xl leading-tight" data-aos="fade-up" data-aos-duration="800">
+            Pengalaman <span class="gold-gradient">Berkendara Nyaman</span> Dimulai di Sini
+          </h1>
+          <p class="mt-5 text-yellow-100/80 max-w-xl" data-aos="fade-up" data-aos-delay="120" data-aos-duration="800">
+            Koleksi mobil bekas terkurasi dengan standar tinggi. Inspeksi menyeluruh, riwayat jelas, dan layanan personal untuk kemudahan Anda.
+          </p>
+          <div class="mt-8 flex gap-4" data-aos="fade-up" data-aos-delay="220">
+            <button id="openMarketplaceHero" class="btn btn-gold rounded-full px-6 py-3 font-medium">Browse Cars</button>
+            <a href="#tentang" class="btn btn-outline-gold rounded-full px-6 py-3">Pelajari Lebih Lanjut</a>
+          </div>
+
+          <!-- Highlights -->
+          <div class="mt-10 grid grid-cols-3 gap-4 max-w-lg" data-aos="fade-up" data-aos-delay="300">
+            <div class="glass gold-border rounded-xl p-4 text-center">
+              <div class="text-lg gold-text font-semibold">150+</div>
+              <div class="text-xs text-yellow-100/70">Unit Tersedia</div>
+            </div>
+            <div class="glass gold-border rounded-xl p-4 text-center">
+              <div class="text-lg gold-text font-semibold">Garansi</div>
+              <div class="text-xs text-yellow-100/70">Kualitas Teruji</div>
+            </div>
+            <div class="glass gold-border rounded-xl p-4 text-center">
+              <div class="text-lg gold-text font-semibold">Personal</div>
+              <div class="text-xs text-yellow-100/70">Konsultasi 1:1</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="relative" data-aos="zoom-in" data-aos-duration="900">
+          <div class="absolute -inset-6 rounded-3xl bg-gradient-to-b from-yellow-400/10 to-transparent blur-2xl"></div>
+          <div class="relative glass gold-border rounded-3xl p-6 overflow-hidden">
+            <!-- Abstract luxury car silhouette (SVG) -->
+            <svg viewBox="0 0 800 420" class="w-full h-auto">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f1d17a"/>
+                  <stop offset="100%" stop-color="#b8922a"/>
+                </linearGradient>
+                <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              <rect x="0" y="0" width="800" height="420" fill="url(#bgGrad)"></rect>
+              <path d="M70 250 C140 180, 240 150, 360 150 C480 150, 620 170, 730 220" stroke="url(#g1)" stroke-width="6" fill="none" filter="url(#softGlow)" />
+              <path d="M150 270 C220 240, 300 230, 380 235 C470 240, 560 260, 650 285" stroke="rgba(241,209,122,0.5)" stroke-width="3" fill="none" />
+              <circle cx="290" cy="310" r="44" stroke="url(#g1)" stroke-width="5" fill="none"/>
+              <circle cx="580" cy="318" r="48" stroke="url(#g1)" stroke-width="5" fill="none"/>
+              <rect x="60" y="60" width="680" height="300" rx="24" fill="rgba(255,255,255,0.02)" stroke="rgba(212,175,55,0.20)"/>
+              <text x="400" y="80" text-anchor="middle" fill="#f1d17a" font-family="Playfair Display" font-size="28">Pilihan Unit Terpercaya</text>
+            </svg>
+            <div class="absolute bottom-5 right-6 text-xs text-yellow-200/70">Ilustrasi siluet — tampilan elegan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tentang -->
+  <section id="tentang" class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-1">
+          <h2 class="display text-3xl gold-gradient" data-aos="fade-right">Mengapa Al Hijrah Mobilndo?</h2>
+          <p class="mt-3 text-yellow-100/80" data-aos="fade-right" data-aos-delay="120">Kami percaya setiap mobil menceritakan kelas pemiliknya—dan kami ada untuk memastikan ceritanya berkesan.</p>
+        </div>
+        <div class="md:col-span-2 grid sm:grid-cols-2 gap-6">
+          <div class="glass gold-border rounded-2xl p-6 card-hover" data-aos="fade-up">
+            <div class="text-yellow-200 font-semibold">Inspeksi 180 Titik</div>
+            <p class="mt-2 text-yellow-100/75 text-sm">Unit ditinjau menyeluruh untuk menjamin standar premium.</p>
+          </div>
+          <div class="glass gold-border rounded-2xl p-6 card-hover" data-aos="fade-up" data-aos-delay="100">
+            <div class="text-yellow-200 font-semibold">Harga Transparan</div>
+            <p class="mt-2 text-yellow-100/75 text-sm">Tanpa biaya tersembunyi. Nilai terbaik sesuai kondisi.</p>
+          </div>
+          <div class="glass gold-border rounded-2xl p-6 card-hover" data-aos="fade-up" data-aos-delay="150">
+            <div class="text-yellow-200 font-semibold">Histori Lengkap</div>
+            <p class="mt-2 text-yellow-100/75 text-sm">Dokumen lengkap dan riwayat servis jelas.</p>
+          </div>
+          <div class="glass gold-border rounded-2xl p-6 card-hover" data-aos="fade-up" data-aos-delay="220">
+            <div class="text-yellow-200 font-semibold">Test Drive Nyaman</div>
+            <p class="mt-2 text-yellow-100/75 text-sm">Atur jadwal sesuai preferensi Anda.</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-10">
+        <button id="openMarketplaceCTA" class="btn btn-gold rounded-full px-8 py-4 text-lg md:text-xl shadow-[0_20px_60px_rgba(212,175,55,0.30)]">Lihat Koleksi ✨</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETPLACE MODAL -->
+  <div id="marketplaceOverlay" class="fixed inset-0 z-50 hidden overlay overflow-y-auto hide-scrollbar">
+    <div class="absolute inset-0" aria-hidden="true"></div>
+    <div class="relative max-w-7xl mx-auto px-6 py-10">
+      <div class="glass gold-border rounded-3xl p-6 md:p-8 scale-in">
+        <div class="flex items-center justify-between gap-4 mb-4">
+          <div>
+            <h3 class="display text-2xl gold-gradient">Marketplace</h3>
+            <p class="text-sm text-yellow-100/70">Pilih mobil idaman Anda</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <input id="searchInput" type="text" placeholder="Cari model atau merk..." class="w-44 md:w-72 rounded-full px-4 py-2 bg-black/40 border border-yellow-400/20 focus:outline-none focus:border-yellow-400/50 text-sm placeholder:text-yellow-100/50" />
+            <button id="closeMarketplace" class="btn btn-outline-gold rounded-full px-4 py-2">Tutup</button>
+          </div>
+        </div>
+
+        <!-- GRID CARDS -->
+        <div id="carsGrid" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-10">
+          <!-- Cards injected by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN DETAIL -->
+  <div id="detailOverlay" class="fixed inset-0 z-[60] hidden overlay overflow-y-auto hide-scrollbar">
+
+    <div class="relative max-w-5xl mx-auto px-6 py-10">
+      <div class="glass gold-border rounded-3xl p-0 overflow-hidden scale-in">
+        <!-- Header detail -->
+        <div class="flex items-center justify-between px-6 md:px-8 py-4 border-b border-yellow-300/15">
+          <div class="min-w-0">
+            <div class="text-lg gold-gradient font-semibold leading-tight" id="detailTitle">Nama Mobil</div>
+            <div class="text-sm text-yellow-100/70 mt-1" id="detailPrice">Harga</div>
+          </div>
+          <button id="closeDetail" class="btn btn-outline-gold rounded-full px-4 py-2">Tutup</button>
+        </div>
+
+        <!-- Gambar/visual -->
+        <div class="relative bg-gradient-to-b from-yellow-300/10 to-transparent">
+          <div class="aspect-[16/8] w-full grid place-items-center">
+            <!-- SVG Placeholder Mobil -->
+            <div id="detailImage" class="w-full h-full flex items-center justify-center p-6">
+              <svg viewBox="0 0 800 350" class="w-full h-full">
+                <defs>
+                  <linearGradient id="d1" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#f1d17a"/>
+                    <stop offset="100%" stop-color="#b8922a"/>
+                  </linearGradient>
+                </defs>
+                <rect x="0" y="0" width="800" height="350" fill="rgba(0,0,0,0.25)"/>
+                <path d="M80 220 C140 160, 260 130, 380 130 C520 130, 640 160, 720 200" stroke="url(#d1)" stroke-width="7" fill="none"/>
+                <circle cx="300" cy="250" r="40" stroke="#f1d17a" stroke-width="5" fill="none"/>
+                <circle cx="580" cy="255" r="42" stroke="#f1d17a" stroke-width="5" fill="none"/>
+                <text x="400" y="70" text-anchor="middle" fill="#f1d17a" font-family="Playfair Display" font-size="26">Tampilan Detail</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Konten detail -->
+        <div class="px-6 md:px-8 py-6 grid md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 space-y-6">
+            <div class="glass gold-border rounded-2xl p-5">
+              <div class="text-yellow-200 font-semibold mb-2">Spesifikasi Mesin</div>
+              <ul id="detailEngine" class="list-disc list-inside text-yellow-100/80 text-sm space-y-1">
+                <!-- Engine specs -->
+              </ul>
+            </div>
+            <div class="glass gold-border rounded-2xl p-5">
+              <div class="text-yellow-200 font-semibold mb-2">Modifikasi</div>
+              <ul id="detailMods" class="list-disc list-inside text-yellow-100/80 text-sm space-y-1">
+                <!-- Mods -->
+              </ul>
+            </div>
+            <div class="glass gold-border rounded-2xl p-5">
+              <div class="text-yellow-200 font-semibold mb-2">Interior & Fitur</div>
+              <ul id="detailInterior" class="list-disc list-inside text-yellow-100/80 text-sm space-y-1">
+                <!-- Interior & features -->
+              </ul>
+            </div>
+            <div class="glass gold-border rounded-2xl p-5">
+              <div class="text-yellow-200 font-semibold mb-2">Riwayat & Dokumen</div>
+              <div id="detailDocs" class="text-yellow-100/80 text-sm space-y-1">
+                <!-- Documents or toggle message -->
+              </div>
+            </div>
+            <div class="glass gold-border rounded-2xl p-5">
+              <div class="text-yellow-200 font-semibold mb-2">Kendala & Kecacatan</div>
+              <ul id="detailIssues" class="list-disc list-inside text-yellow-100/80 text-sm space-y-1">
+                <!-- Known issues -->
+              </ul>
+            </div>
+            <div class="glass gold-border rounded-2xl p-5">
+              <div class="text-yellow-200 font-semibold mb-2">Informasi Lainnya</div>
+              <ul id="detailInfo" class="list-disc list-inside text-yellow-100/80 text-sm space-y-1">
+                <!-- Other info -->
+              </ul>
+            </div>
+          </div>
+          <div class="md:col-span-1">
+            <div class="glass gold-border rounded-2xl p-6 sticky top-24">
+              <div class="text-sm text-yellow-100/75">Tertarik?</div>
+              <div class="text-lg gold-gradient font-semibold" id="detailCTAName">—</div>
+              <button id="waButton" class="mt-4 w-full btn btn-gold rounded-xl px-5 py-3 flex items-center justify-center gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 3H4a1 1 0 0 0-1 1v16l4-4h13a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z" stroke="#0b0b0d" stroke-width="1.6"/>
+                </svg>
+                <span>Chat via WhatsApp</span>
+              </button>
+              <p class="mt-3 text-xs text-yellow-100/60">Klik untuk membuka WhatsApp dengan pesan otomatis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-10 border-t border-yellow-300/10">
+    <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-yellow-100/70 text-sm">© <span id="year"></span> Al Hijrah Mobilndo. Semua hak dilindungi.</div>
+      <div class="text-yellow-100/60 text-xs">Transaksi aman dan transparan.</div>
+    </div>
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    // Toggle untuk menampilkan detail dokumen
+    const SHOW_DOCUMENTS = true; // set ke false untuk menyembunyikan detail dokumen
+
+    // Data mobil sampel (singkat)
+    const cars = [
+      {
+        id: 'alphard-2011',
+        name: 'Alphard Sound 2011',
+        price: 'Rp 278.000.000',
+        desc: 'MPV mewah, kabin kedap, audio premium.',
+        imageType: 'lux', // gunakan SVG internal
+        imageUrl: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?q=80&w=1280&auto=format&fit=crop',
+        tags: ['Bekas', 'Luxury'],
+        engine: ['V6 3.5L', 'Tenaga 271 HP', 'Transmisi otomatis 6-percepatan', 'Penggerak FWD'],
+        mods: ['Head unit Android', 'Peredam kabin tambahan', 'Sound system upgrade'],
+        interior: ['Kabin kulit premium', 'Captain seat', 'Ambient light'],
+        documents: ['STNK aktif', 'BPKB asli', 'Faktur lengkap'],
+        issues: ['Baret tipis bumper belakang (polishable)'],
+        info: ['Odo 98.000 km', 'Servis rutin bengkel resmi', 'Dokumen lengkap']
+      },
+      {
+        id: 'civic-2018',
+        name: 'Honda Civic Turbo 2018',
+        price: 'Rp 315.000.000',
+        desc: 'Sedan sport elegan, turbo responsif.',
+        imageType: 'sport',
+        imageUrl: 'https://images.unsplash.com/photo-1606661687598-c0f36d6af7d8?q=80&w=1280&auto=format&fit=crop',
+        tags: ['Bekas'],
+        engine: ['1.5L VTEC Turbo', 'Tenaga 173 HP', 'CVT halus', 'Penggerak FWD'],
+        mods: ['Velg 18" forged', 'Coilover adjustable', 'Cat detailing ceramic'],
+        interior: ['Jok kulit', 'Cruise control', 'Head unit Apple CarPlay'],
+        documents: ['STNK aktif', 'BPKB asli'],
+        issues: [],
+        info: ['Odo 65.000 km', 'Rekaman servis lengkap', 'Tangan pertama']
+      },
+      {
+        id: 'pajero-2017',
+        name: 'Mitsubishi Pajero Dakar 2017',
+        price: 'Rp 399.000.000',
+        desc: 'SUV gagah, siap jelajah.',
+        imageType: 'suv',
+        imageUrl: '', // kosong -> fallback ke placeholder/SVG
+        tag: ['Bekas'],
+        engine: ['2.4L Diesel MIVEC', 'Tenaga 181 HP', 'AT 8-percepatan', '4x4 Selectable'],
+        mods: ['Roof rack elegan', 'Ban A/T baru', 'Lampu LED premium'],
+        interior: ['AC double blower', 'Mode off-road', 'Jok elektrik'],
+        documents: ['STNK aktif'],
+        issues: ['Stone chip minor kap mesin'],
+        info: ['Odo 78.000 km', 'Service record ada', 'Asuransi aktif']
+      },
+      {
+        id: 'mini-2016',
+        name: 'Mini Cooper S 2016',
+        price: 'Rp 375.000.000',
+        desc: 'Ikonik, fun to drive.',
+        imageType: 'retro',
+        imageUrl: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1280&auto=format&fit=crop',
+        tag: ['Bekas'],
+        engine: ['2.0L Turbo', '192 HP', 'AT 6-percepatan', 'FWD'],
+        mods: ['Stripe body gold', 'Knob interior custom', 'Detailing interior'],
+        interior: ['Sunroof', 'Jok sport', 'Harman Kardon audio'],
+        documents: ['STNK aktif', 'BPKB asli', 'Buku servis lengkap'],
+        issues: [],
+        info: ['Odo 52.000 km', 'Full orisinil', 'Buku servis lengkap']
+      },
+      {
+        id: 'camry-2020',
+        name: 'Toyota Camry 2.5 2020',
+        price: 'Rp 485.000.000',
+        desc: 'Eksekutif, nyaman dan senyap.',
+        imageType: 'sedan',
+        imageUrl: 'https://images.unsplash.com/photo-1590434058644-4c6a1bf9efaa?q=80&w=1280&auto=format&fit=crop',
+        tag: ['Bekas'],
+        engine: ['2.5L Dynamic Force', '203 HP', 'AT 8-percepatan', 'FWD'],
+        mods: ['Kaca film premium', 'Coating full body', 'Karpet luxury'],
+        interior: ['Wireless charger', 'Seat ventilation', 'Head unit OEM'],
+        documents: ['STNK aktif', 'BPKB asli'],
+        issues: [],
+        info: ['Odo 38.000 km', 'Tangan pertama', 'Siap pakai']
+      },
+      {
+        id: 'fortuner-2019',
+        name: 'Toyota Fortuner VRZ 2019',
+        price: 'Rp 430.000.000',
+        desc: 'SUV favorit, tangguh dan berkelas.',
+        imageType: 'suv2',
+        imageUrl: null, // null -> fallback
+        tag: ['Bekas'],
+        engine: ['2.4L Diesel', '150 HP', 'AT 6-percepatan', 'RWD'],
+        mods: ['Side step elegan', 'Foglamp LED', 'Cover jok premium'],
+        interior: ['Keyless', 'AC digital', 'Head unit Android'],
+        documents: [],
+        issues: ['Velg lecet ringan'],
+        info: ['Odo 70.000 km', 'Service record', 'Pajak panjang']
+      }
+    ];
+
+    // Elemen
+    const marketplaceOverlay = document.getElementById('marketplaceOverlay');
+    const detailOverlay = document.getElementById('detailOverlay');
+    const carsGrid = document.getElementById('carsGrid');
+    const searchInput = document.getElementById('searchInput');
+
+    // Tombol pembuka
+    ['openMarketplaceHero','openMarketplaceCTA','openMarketplaceTop','openMarketplaceTopMobile'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.addEventListener('click', openMarketplace);
+    });
+
+    // Tutup marketplace
+    document.getElementById('closeMarketplace').addEventListener('click', closeMarketplace);
+    marketplaceOverlay.addEventListener('click', (e)=>{
+      if(e.target === marketplaceOverlay) closeMarketplace();
+    });
+
+    // Tutup detail
+    document.getElementById('closeDetail').addEventListener('click', closeDetail);
+    detailOverlay.addEventListener('click', (e)=>{
+      if(e.target === detailOverlay) closeDetail();
+    });
+
+    // Tahun footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Init AOS
+    AOS.init({ duration: 700, easing: 'ease-out-cubic', once: false, mirror: true });
+
+    // Helper: escape HTML to prevent injection in tag rendering
+    function escapeHTML(str){
+      return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#39;');
+    }
+
+    // Helper: render tag with only the word "Luxury" highlighted in gold gradient
+    function renderTag(tagText){
+      const safe = String(tagText ?? 'Bekas');
+      const parts = safe.split(/(Luxury)/i);
+      const inner = parts.map(p => (/^luxury$/i.test(p) ? '<span class="gold-gradient font-semibold">Luxury</span>' : escapeHTML(p))).join('');
+      return `<span class="text-xs text-yellow-100/70 px-2 py-1 rounded-full border border-yellow-400/20">${inner}</span>`;
+    }
+
+    // Helper: render multiple tags
+    function renderTags(tags){
+      const list = Array.isArray(tags) ? tags : (tags ? [tags] : ['Bekas']);
+      return `<div class="flex flex-wrap gap-1 justify-end">${list.map(renderTag).join('')}</div>`;
+    }
+
+    function openMarketplace(){
+      marketplaceOverlay.classList.remove('hidden');
+      renderCars(cars);
+      // Re-init AOS agar animasi muncul saat modal dibuka
+      setTimeout(()=>{ AOS.refreshHard(); }, 50);
+    }
+    function closeMarketplace(){
+      marketplaceOverlay.classList.add('hidden');
+    }
+
+    function renderCars(list){
+      carsGrid.innerHTML = '';
+      list.forEach((car, idx)=>{
+        const card = document.createElement('div');
+        card.className = 'glass gold-border rounded-2xl overflow-hidden card-hover cursor-pointer';
+        card.setAttribute('data-aos', 'fade-up');
+        card.setAttribute('data-aos-delay', String((idx%6)*60));
+        card.tabIndex = 0;
+        card.setAttribute('role','button');
+        card.setAttribute('aria-label', `Lihat detail ${car.name}`);
+
+        // Card content
+        card.innerHTML = `
+          <div class="bg-gradient-to-b from-yellow-300/10 to-transparent">
+            <div class="aspect-[16/9] w-full relative overflow-hidden">
+              <img data-card-img class="absolute inset-0 w-full h-full object-cover" alt="${car.name}" />
+              <div data-fallback class="absolute inset-0 grid place-items-center">
+                ${makeCarSVG(car.imageType)}
+              </div>
+            </div>
+          </div>
+          <div class="p-5">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-lg gold-gradient font-semibold leading-tight">${car.name}</div>
+                <div class="text-sm text-yellow-100/70 mt-1">${car.price}</div>
+              </div>
+              ${renderTags(car.tags || (car.tag ? [car.tag] : ['Bekas']))}
+            </div>
+            <p class="mt-3 text-sm text-yellow-100/80">${car.desc}</p>
+            <div class="mt-4 flex items-center justify-between">
+              <button class="btn btn-outline-gold rounded-full px-4 py-2 text-sm">Lihat Detail</button>
+              <div class="text-yellow-200/80 text-xs">Sesuai Syariah</div>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener('click', ()=> openDetail(car));
+        card.addEventListener('keypress', (e)=>{ if(e.key === 'Enter') openDetail(car); });
+
+        // Setup image with fallback
+        const imgEl = card.querySelector('[data-card-img]');
+        const fallbackEl = card.querySelector('[data-fallback]');
+        const placeholder = 'https://via.placeholder.com/1280x720?text=Al+Hijrah+Mobilndo';
+        if(car.imageUrl){
+          imgEl.src = car.imageUrl;
+        } else {
+          imgEl.src = placeholder;
+        }
+        imgEl.onload = ()=>{ if(imgEl.naturalWidth>0) fallbackEl.style.display='none'; };
+        imgEl.onerror = ()=>{
+          // try placeholder, then keep SVG
+          if(imgEl.src !== placeholder){
+            imgEl.src = placeholder;
+          } else {
+            imgEl.style.display='none';
+            fallbackEl.style.display='grid';
+          }
+        };
+
+        carsGrid.appendChild(card);
+      });
+      // Pastikan AOS membaca elemen baru
+      AOS.refreshHard();
+    }
+
+    // Pencarian
+    searchInput.addEventListener('input', (e)=>{
+      const q = e.target.value.toLowerCase().trim();
+      const filtered = cars.filter(c =>
+        c.name.toLowerCase().includes(q) ||
+        c.desc.toLowerCase().includes(q)
+      );
+      renderCars(filtered);
+    });
+
+    // Detail
+    const detailTitle = document.getElementById('detailTitle');
+    const detailPrice = document.getElementById('detailPrice');
+    const detailEngine = document.getElementById('detailEngine');
+    const detailMods = document.getElementById('detailMods');
+    const detailInterior = document.getElementById('detailInterior');
+    const detailDocs = document.getElementById('detailDocs');
+    const detailIssues = document.getElementById('detailIssues');
+    const detailInfo = document.getElementById('detailInfo');
+    const detailImage = document.getElementById('detailImage');
+    const detailCTAName = document.getElementById('detailCTAName');
+    const waButton = document.getElementById('waButton');
+
+    function openDetail(car){
+      detailTitle.textContent = car.name;
+      detailPrice.textContent = car.price;
+      detailCTAName.textContent = car.name;
+      detailEngine.innerHTML = car.engine.map(i=> `<li>${i}</li>`).join('');
+      detailMods.innerHTML = car.mods.map(i=> `<li>${i}</li>`).join('');
+      detailInterior.innerHTML = (car.interior?.length ? car.interior : ['—']).map(i=> `<li>${i}</li>`).join('');
+      if(SHOW_DOCUMENTS && car.documents && car.documents.length){
+        detailDocs.innerHTML = `<ul class="list-disc list-inside space-y-1">${car.documents.map(d=>`<li>${d}</li>`).join('')}</ul>`;
+      } else {
+        detailDocs.innerHTML = `<div class="text-yellow-100/70">Kontak Penjual untuk Detail Dokumen</div>`;
+      }
+      detailIssues.innerHTML = (car.issues?.length ? car.issues : ['Tidak ada catatan signifikan']).map(i=> `<li>${i}</li>`).join('');
+      detailInfo.innerHTML = car.info.map(i=> `<li>${i}</li>`).join('');
+
+      // Gambar detail dengan fallback
+      const placeholder = 'https://via.placeholder.com/1600x900?text=Al+Hijrah+Mobilndo';
+      const url = car.imageUrl || placeholder;
+      detailImage.innerHTML = `
+        <div class="relative w-full h-full">
+          <img id="detailImgEl" class="absolute inset-0 w-full h-full object-cover" alt="${car.name}" />
+          <div id="detailFallback" class="absolute inset-0">${makeWideCarSVG(car.imageType)}</div>
+        </div>`;
+      const imgEl = detailImage.querySelector('#detailImgEl');
+      const fallbackEl = detailImage.querySelector('#detailFallback');
+      imgEl.src = url;
+      imgEl.onload = ()=>{ if(imgEl.naturalWidth>0) fallbackEl.style.display='none'; };
+      imgEl.onerror = ()=>{
+        if(imgEl.src !== placeholder){
+          imgEl.src = placeholder;
+        } else {
+          imgEl.style.display='none';
+          fallbackEl.style.display='block';
+        }
+      };
+
+      // WhatsApp prefill message (sesuai permintaan)
+      const msg = `Halo, Saya tertarik pada mobil ${car.name}`;
+      waButton.onclick = ()=>{
+        const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+      };
+
+      detailOverlay.classList.remove('hidden');
+      // Refresh AOS ketika masuk viewport lagi (jaga-jaga)
+      setTimeout(()=>{ AOS.refresh(); }, 80);
+    }
+
+    function closeDetail(){
+      detailOverlay.classList.add('hidden');
+      setTimeout(()=>{ AOS.refresh(); }, 60);
+    }
+
+    // SVG generator untuk kartu
+    function makeCarSVG(type){
+      const wheel = `<circle cx="260" cy="150" r="18" stroke="#f1d17a" stroke-width="3" fill="none"/>
+                     <circle cx="520" cy="155" r="20" stroke="#f1d17a" stroke-width="3" fill="none"/>`;
+      const lineBase = `<path d="M120 130 C200 100, 360 90, 560 110" stroke="#f1d17a" stroke-width="4" fill="none"/>`;
+      const accent = `<path d="M140 165 C260 150, 440 150, 610 170" stroke="rgba(241,209,122,.55)" stroke-width="3" fill="none"/>`;
+      const sedan = `<path d="M140 140 C220 110, 360 105, 520 120 S 660 160, 640 175" stroke="#f1d17a" stroke-width="5" fill="none"/>`;
+      const suv = `<path d="M120 150 C220 120, 340 120, 520 140 S 660 190, 640 200" stroke="#f1d17a" stroke-width="6" fill="none"/>`;
+      const sport = `<path d="M130 140 C240 100, 400 95, 590 120 S 660 160, 630 170" stroke="#f1d17a" stroke-width="5" fill="none"/>`;
+      const retro = `<path d="M130 150 C210 130, 330 120, 480 130 S 620 170, 600 180" stroke="#f1d17a" stroke-width="5" fill="none"/>`;
+
+      let shape = sedan;
+      if(type==='suv'||type==='suv2') shape = suv;
+      if(type==='sport') shape = sport;
+      if(type==='retro') shape = retro;
+      if(type==='lux') shape = sedan;
+
+      return `
+        <svg viewBox="0 0 720 220" class="w-full h-full">
+          <defs>
+            <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f1d17a"/>
+              <stop offset="100%" stop-color="#b8922a"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect x="0" y="0" width="720" height="220" fill="rgba(0,0,0,0.15)"/>
+          ${lineBase}
+          ${shape.replace('#f1d17a','url(#cg)')}
+          ${accent}
+          ${wheel}
+        </svg>
+      `;
+    }
+
+    // SVG untuk detail lebar
+    function makeWideCarSVG(type){
+      const base = makeCarSVG(type);
+      // Perbesar, tambahkan dekorasi
+      return `
+        <div class="w-full h-full">
+          ${base}
+          <div class="absolute inset-x-6 bottom-6">
+            <div class="h-px bg-gradient-to-r from-transparent via-yellow-400/40 to-transparent"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    // AOS re-init saat kembali ke viewport
+    const reobserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          AOS.refresh();
+        }
+      });
+    }, {threshold: 0.2});
+    document.querySelectorAll('section').forEach(sec=> reobserver.observe(sec));
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e7b82b278a9cab',t:'MTc1Nzc2NzI5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
